@@ -1,0 +1,13 @@
+server:
+  port: 56010
+
+spring:
+  application:
+    name: service1
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8080 #配置中心地址，也是注册中心
+        file-extension: yaml #dataId是配置文件的名称，是application.name+扩展名(file-extension)  如service1.yaml
+        namesapce: e12e455c-c01e-4c0e-bb8b-e30b286434f9 #dev环境的id
+        group: TEST_GROUP #测试组
