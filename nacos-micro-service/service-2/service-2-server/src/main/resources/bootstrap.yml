@@ -1,0 +1,33 @@
+server:
+  port: ${port:56030} #http的，本项目暂时用不着因为application1用的是dubbo协议去调用service1
+
+spring:
+  application:
+    name: service1
+  main:
+    allow-bean-definition-overriding: true #spingboot2.1需要设定
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: e12e455c-c01e-4c0e-bb8b-e30b286434f9 #dev
+        cluster-name: DEFAULT
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        namespace: e12e455c-c01e-4c0e-bb8b-e30b286434f9 #dev
+        group: NACOS_MICROSERVICE_GROUP #哪个项目
+
+dubbo:
+  scan:
+    base-packages: com.yyh.nacosservice #dubbo扫描基准包
+  protocol:
+    name: dubbo #选择dubbo协议(也是默认的)，还有其他协议，比如rmi
+    port: ${dubbo_port:20881} #dubbo协议端口
+  registry:
+    address: nacos://127.0.0.1:8848 #注册到nacos的dev
+  application:
+    qos-enable: false #dubbo运维服务是否开启
+  consumer:
+    check: false #dubbo缺省会在启动时检查依赖的服务是否可用，不可用时抛出异常，阻止Spring初始化完成，
+                 #以便上线时，能及早发现问题，默认check=true。
